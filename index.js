@@ -18,7 +18,6 @@ async function run() {
   try {
     const today = moment().format("DD.MM");
     const todayFull = moment().format("YYYY-MM-DD");
-    console.log(today);
     logger.debug("Making request to NocoDB to get all birthdays...");
     const rows = await nocodb.listRows(NOCODB_TABLE_ID, {
       limit: 1000,
