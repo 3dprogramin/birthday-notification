@@ -1,0 +1,15 @@
+[Unit]
+Description=Birthday Notification Service
+After=network.target
+
+[Service]
+User=icebox
+Type=simple
+WorkingDirectory=/work/projects/birthday-notification
+ExecStart=/usr/bin/node /work/projects/birthday-notification/index.js
+Restart=on-failure
+Environment=NODE_ENV=production
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+
+[Install]
+WantedBy=multi-user.target

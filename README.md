@@ -1,5 +1,14 @@
 # Birthday Notification Bot
 
+## Service branch
+
+This branch is for running the script as a service on system boot rather than as a cronjob.
+The service file is located in `service/birthday-notification.service`
+Change the paths accordingly as well as the username and the userId on this line:
+`Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus`
+
+---
+
 A Node.js application that sends birthday notifications to a Discord channel using data from a NocoDB table.
 
 ![nocodb image](images/nocodb.png)
@@ -22,7 +31,7 @@ A Node.js application that sends birthday notifications to a Discord channel usi
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/birthday-notification.git
+   git clone https://github.com/3dprogramin/birthday-notification.git
    cd birthday-notification
    ```
 
@@ -33,11 +42,9 @@ A Node.js application that sends birthday notifications to a Discord channel usi
 
 3. **Configure environment variables:**
    Set the following environment variables (e.g., in a `.env` file or your shell):
-   - `DISCORD_WEBHOOK` - Your Discord webhook URL
    - `NOCODB_URL` - Base URL of your NocoDB instance (e.g., `https://localhost:8080`)
    - `NOCODB_API_KEY` - Your NocoDB API key
    - `NOCODB_TABLE_ID` - The table ID to fetch birthdays from
-   - `CRON_INTERVAL` - The interval / time when the script runs
 
 4. **Run the bot:**
    ```bash
@@ -48,7 +55,6 @@ A Node.js application that sends birthday notifications to a Discord channel usi
 
 - `index.js` - Main entry point, schedules and runs the notification logic
 - `modules/nocodb.js` - Handles NocoDB API interactions
-- `modules/discord.js` - Sends messages to Discord
 - `modules/logger.js` - Logging utility
 - `modules/env.js` - (Optional) Environment variable management
 
