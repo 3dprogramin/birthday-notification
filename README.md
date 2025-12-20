@@ -1,7 +1,6 @@
 # Birthday Notification Bot
 
 A Node.js application that sends birthday notifications to a Discord channel using data from a NocoDB table.
-The script checks for birthdays everyday at 13:00.
 
 ![nocodb image](images/nocodb.png)
 ![discord image](images/discord.png)
@@ -38,6 +37,7 @@ The script checks for birthdays everyday at 13:00.
    - `NOCODB_URL` - Base URL of your NocoDB instance (e.g., `https://localhost:8080`)
    - `NOCODB_API_KEY` - Your NocoDB API key
    - `NOCODB_TABLE_ID` - The table ID to fetch birthdays from
+   - `CRON_INTERVAL` - The interval / time when the script runs
 
 4. **Run the bot:**
    ```bash
