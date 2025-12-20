@@ -1,18 +1,15 @@
 import NocoDB from "./modules/nocodb.js";
-import { sendNotification } from "./modules/discord.js";
 import logger from "./modules/logger.js";
 import moment from "moment";
-import cron from "node-cron";
+import utils from "./modules/utils.js";
 
 // disable TLS verification, for self-signed certificates, nocodb might be running with self-signed cert
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // Configuration
-const DISCORD_WEBHOOK = process.env.DISCORD_WEBHOOK;
 const NOCODB_URL = process.env.NOCODB_URL;
 const NOCODB_API_KEY = process.env.NOCODB_API_KEY;
 const NOCODB_TABLE_ID = process.env.NOCODB_TABLE_ID;
-const CRON_INTERVAL = process.env.CRON_INTERVAL;
 
 // nocodb instance
 const nocodb = new NocoDB(NOCODB_URL, NOCODB_API_KEY);
@@ -31,8 +28,8 @@ async function run() {
       const row = rows[i];
       if (row["Date"] === today) {
         logger.info(`It's ${row["Name"]}'s birthday today!`);
-        await sendNotification(
-          DISCORD_WEBHOOK,
+        await utils.sendDesktopNotification(
+          "Birthday",
           `🎉 Today is ${row["Name"]}'s birthday!`
         );
         await nocodb.updateRow(NOCODB_TABLE_ID, row["Id"], {
@@ -48,10 +45,9 @@ async function run() {
 
 async function main() {
   logger.info("Birthday notification (nocodb) script started");
-  cron.schedule(CRON_INTERVAL, async () => {
-    logger.debug("Running scheduled birthday check...");
-    await run();
-  });
+  logger.info("Sleeping for 10 seconds to allow services to start...");
+  await utils.sleep(10000);
+  await run();
 }
 
 main();
