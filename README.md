@@ -22,7 +22,7 @@ A Node.js application that sends birthday notifications to a Discord channel usi
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/yourusername/birthday-notification.git
+   git clone https://github.com/3dprogramin/birthday-notification.git
    cd birthday-notification
    ```
 
