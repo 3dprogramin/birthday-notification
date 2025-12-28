@@ -13,6 +13,7 @@ const NOCODB_URL = process.env.NOCODB_URL;
 const NOCODB_API_KEY = process.env.NOCODB_API_KEY;
 const NOCODB_TABLE_ID = process.env.NOCODB_TABLE_ID;
 const CRON_INTERVAL = process.env.CRON_INTERVAL;
+const RUN_STARTUP = !!process.env.RUN_STARTUP;
 
 // nocodb instance
 const nocodb = new NocoDB(NOCODB_URL, NOCODB_API_KEY);
@@ -51,6 +52,10 @@ async function main() {
     logger.debug("Running scheduled birthday check...");
     await run();
   });
+
+  if (RUN_STARTUP) {
+    await run();
+  }
 }
 
 main();
