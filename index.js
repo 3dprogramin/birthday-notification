@@ -26,6 +26,13 @@ async function run() {
     const rows = await nocodb.listRows(NOCODB_TABLE_ID, {
       limit: 1000,
     });
+    // check if rows are returned
+    if (!rows || rows.length === 0) {
+	logger.debug("No rows found in the NocoDB table.");
+	return;
+    }
+
+    let noBirthdaysToday = true;
     // go through all rows and check if today is someone's birthday
     for (let i = 0; i < rows.length; i++) {
       const row = rows[i];
@@ -39,7 +46,13 @@ async function run() {
           SentNotifications: (row["SentNotifications"] || 0) + 1,
           LastNotification: todayFull,
         });
+	noBirthdaysToday = false;
       }
+    }
+
+    // print no birthdays today if none found
+    if (noBirthdaysToday) {
+      logger.info("No birthdays today.");
     }
   } catch (err) {
     logger.error("Error occurred during birthday check:", err);
