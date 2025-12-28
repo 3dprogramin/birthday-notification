@@ -1,0 +1,14 @@
+services:
+  birthday-bot:
+    build: .
+    container_name: birthday-bot
+    restart: unless-stopped
+    environment:
+      DISCORD_WEBHOOK: "${DISCORD_WEBHOOK}"
+      NOCODB_URL: "${NOCODB_URL}"
+      NOCODB_API_KEY: "${NOCODB_API_KEY}"
+      NOCODB_TABLE_ID: "${NOCODB_TABLE_ID}"
+      CRON_INTERVAL: "${CRON_INTERVAL}"
+      TZ: "Europe/Bucharest"
+    # optional, but nice:
+    init: true
